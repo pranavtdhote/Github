@@ -3,12 +3,11 @@
 <head>
 
 <meta charset="UTF-8">
-<title>Event Registration</title>
+<title>Event Registration & Login</title>
 
 <style>
 
 body {
-
 font-family: Arial, sans-serif;
 background: linear-gradient(135deg, #667eea, #764ba2);
 height: 100vh;
@@ -16,48 +15,38 @@ display: flex;
 justify-content: center;
 align-items: center;
 margin: 0;
-
 }
 
 .container {
-
 background: white;
 padding: 40px;
 border-radius: 15px;
 box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 width: 350px;
 text-align: center;
-
 }
 
 h2 {
-
 margin-bottom: 20px;
 color: #333;
-
 }
 
 input {
-
 width: 100%;
 padding: 12px;
 margin: 10px 0;
 border-radius: 8px;
 border: 1px solid #ccc;
 font-size: 16px;
-
 }
 
 input:focus {
-
 border-color: #667eea;
 outline: none;
 box-shadow: 0 0 5px #667eea;
-
 }
 
 button {
-
 width: 100%;
 padding: 12px;
 background: #667eea;
@@ -67,22 +56,25 @@ font-size: 18px;
 border-radius: 8px;
 cursor: pointer;
 transition: 0.3s;
-
 }
 
 button:hover {
-
 background: #5a67d8;
 transform: scale(1.05);
+}
 
+.toggle-btn {
+background: transparent;
+color: #667eea;
+border: none;
+cursor: pointer;
+margin-top: 10px;
 }
 
 .footer {
-
 margin-top: 15px;
 font-size: 12px;
 color: gray;
-
 }
 
 </style>
@@ -93,25 +85,49 @@ color: gray;
 
 <div class="container">
 
-<h2>🎉 Event Registration</h2>
+<h2 id="form-title">🎉 Event Registration</h2>
 
-<form method="POST">
-
+<!-- REGISTER FORM -->
+<form id="registerForm" method="POST">
 <input type="text" name="name" placeholder="Enter your Name" required>
-
 <input type="email" name="email" placeholder="Enter your Email" required>
-
+<input type="password" name="password" placeholder="Enter Password" required>
 <button type="submit">Register Now</button>
-
 </form>
 
-<div class="footer">
+<!-- LOGIN FORM -->
+<form id="loginForm" method="POST" style="display:none;">
+<input type="email" name="email" placeholder="Enter your Email" required>
+<input type="password" name="password" placeholder="Enter Password" required>
+<button type="submit">Login</button>
+</form>
 
+<button class="toggle-btn" onclick="toggleForm()">Already have an account? Login</button>
 
+<div class="footer"></div>
 
 </div>
 
-</div>
+<script>
+
+let isLogin = false;
+
+function toggleForm() {
+    isLogin = !isLogin;
+
+    document.getElementById("registerForm").style.display = isLogin ? "none" : "block";
+    document.getElementById("loginForm").style.display = isLogin ? "block" : "none";
+
+    document.getElementById("form-title").innerText = isLogin 
+        ? "🔐 Login" 
+        : "🎉 Event Registration";
+
+    document.querySelector(".toggle-btn").innerText = isLogin 
+        ? "Don't have an account? Register" 
+        : "Already have an account? Login";
+}
+
+</script>
 
 </body>
 </html>
