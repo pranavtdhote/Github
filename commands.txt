@@ -1,35 +1,196 @@
+# =========================================================
+# STEP 1: INITIALIZE GITHUB REPOSITORY (Version Control Setup)
+# =========================================================
+
 git init
+
+# Connect local project to GitHub remote repository
 git remote add origin https://github.com/your-username/flask-app.git
-git branch -M main 
+
+# Rename default branch to main
+git branch -M main
+
+# Add all project files
 git add .
+
+# First version commit
 git commit -m "Initial commit"
+
+# Push main branch to GitHub
 git push -u origin main
+
+
+# =========================================================
+# STEP 2: FEATURE DEVELOPMENT WORKFLOW (Collaboration)
+# =========================================================
+
+# Create new branch for feature
 git branch feature-login
+
+# Switch to feature branch
 git checkout feature-login
+
+# Make changes in project files manually
+# Example: Add login page / modify code
+
+# Add updated files
 git add .
+
+# Commit feature changes
 git commit -m "Added feature login"
+
+# Push feature branch to GitHub
 git push origin feature-login
+
+
+# =========================================================
+# STEP 3: MERGE FEATURE INTO MAIN
+# =========================================================
+
+# Switch back to main branch
 git checkout main
+
+# Merge feature branch into main
 git merge feature-login
+
+# Push updated main branch
 git push origin main
-//merge
-create two seperate brach 
-push different changes in each branch
-try to merge it 
-you will get conflict
-git branch branch1  
+
+
+# =========================================================
+# STEP 4: MERGE CONFLICT DEMONSTRATION
+# =========================================================
+
+# Create two separate branches
+git branch branch1
 git branch branch2
-git checkout branch1 
-git push origin branch1     
+
+# ---------------------------
+# BRANCH 1 CHANGES
+# ---------------------------
+
+git checkout branch1
+
+# Modify same file differently in branch1 manually
+
+git add .
+
+git commit -m "Branch1 changes"
+
+git push origin branch1
+
+
+# ---------------------------
+# BRANCH 2 CHANGES
+# ---------------------------
+
 git checkout branch2
-git push origin branch2    
-git checout main
-git merge beanch1
-git merge branch2   
+
+# Modify same file differently in branch2 manually
+
+git add .
+
+git commit -m "Branch2 changes"
+
+git push origin branch2
+
+
+# =========================================================
+# STEP 5: FORCE MERGE CONFLICT
+# =========================================================
+
+# Switch to main branch
+git checkout main
+
+# Merge branch1 first
+git merge branch1
+
+# Merge branch2 (Conflict likely if same file/lines changed)
+git merge branch2
+
+
+# =========================================================
+# STEP 6: CONFLICT ANALYSIS
+# =========================================================
+
+# Check repository status
 git status
+
+# View commit history
 git log
-git diff (try to run in conflict)  
+
+# View conflicting differences
+git diff
+
+
+# =========================================================
+# STEP 7: MANUAL CONFLICT RESOLUTION
+# =========================================================
+
+# Open conflicted file manually
+# Remove:
+# <<<<<<< HEAD
+# =======
+# >>>>>>> branch2
+
+# Keep final desired code
+
+# Add resolved file
+git add .
+
+# Commit resolved merge
+git commit -m "Resolved merge conflict"
+
+# Push resolved code
+git push origin main
+
+
+# =========================================================
+# STEP 8: VERSION ROLLBACK
+# =========================================================
+
+# Revert latest commit safely
 git revert HEAD
+
+# View version history
 git log --oneline
+
+
+# =========================================================
+# STEP 9: VERSION TAGGING (Official Release Version)
+# =========================================================
+
+# Create version tag
 git tag v1.1
+
+# Push tag to GitHub
 git push origin v1.1
+
+
+# =========================================================
+# STEP 10: USEFUL EXTRA COMMANDS
+# =========================================================
+
+# Show all branches
+git branch
+
+# Show remote branches
+git branch -r
+
+# Show all tags
+git tag
+
+# View specific tag details
+git show v1.1
+
+# Switch to old version
+git checkout v1.1
+
+# Return to main
+git checkout main
+
+# Delete local branch
+git branch -d branch1
+
+# Delete remote branch
+git push origin --delete branch1
