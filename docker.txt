@@ -1,0 +1,219 @@
+# =========================================================
+# DOCKER PRACTICAL EXAM ESSENTIAL COMMANDS (POWERSHELL FRIENDLY)
+# Converted for Windows PowerShell usage from your original checklist :contentReference[oaicite:0]{index=0}
+# =========================================================
+
+
+# =========================================================
+# PART 1: VERIFY DOCKER INSTALLATION
+# =========================================================
+
+# Check Docker version
+docker --version
+
+# Check Docker service info
+docker info
+
+# List running containers
+docker ps
+
+# List all containers
+docker ps -a
+
+# List all images
+docker images
+
+
+# =========================================================
+# PART 2: STOP AND REMOVE OLD CONTAINERS
+# =========================================================
+
+# Stop specific container
+docker stop <container-id>
+
+# Remove specific container
+docker rm <container-id>
+
+# Stop all running containers
+docker ps -q | ForEach-Object { docker stop $_ }
+
+# Remove all containers
+docker ps -aq | ForEach-Object { docker rm $_ }
+
+
+# =========================================================
+# PART 3: REMOVE OLD IMAGES
+# =========================================================
+
+# Remove specific image
+docker rmi <image-id>
+
+# Remove all images
+docker images -q | ForEach-Object { docker rmi -f $_ }
+
+# Force remove image
+docker rmi -f <image-id>
+
+
+# =========================================================
+# PART 4: COMPLETE SYSTEM CLEANUP
+# =========================================================
+
+# Remove stopped containers, unused networks, unused images
+docker system prune -a -f
+
+# Remove volumes too
+docker system prune --volumes -f
+
+
+# =========================================================
+# PART 5: PULL IMPORTANT IMAGES
+# =========================================================
+
+docker pull python:3.9
+docker pull jenkins/jenkins:lts
+docker pull nginx
+docker pull busybox
+docker pull ubuntu
+
+
+# =========================================================
+# PART 6: BUILD PROJECT IMAGE
+# =========================================================
+
+# Build current project
+docker build -t flask-app .
+
+# Build versioned image
+docker build -t flask-app:v1 .
+
+
+# =========================================================
+# PART 7: RUN CONTAINER (PORT SAFE)
+# =========================================================
+
+# Default
+docker run -d -p 5000:5000 --name flask-container flask-app
+
+# Jenkins-safe
+docker run -d -p 8080:5000 --name flask-container flask-app
+
+# Alternate
+docker run -d -p 6000:5000 --name flask-container flask-app
+
+
+# =========================================================
+# PART 8: ACCESS CONTAINER SHELL
+# =========================================================
+
+docker exec -it flask-container bash
+
+
+# =========================================================
+# PART 9: LOGS + STATUS
+# =========================================================
+
+# Logs
+docker logs flask-container
+
+# Live logs
+docker logs -f flask-container
+
+# Inspect
+docker inspect flask-container
+
+
+# =========================================================
+# PART 10: DOCKER HUB LOGIN + PUSH
+# =========================================================
+
+docker login
+
+# Tag
+docker tag flask-app yourusername/flask-app:v1
+
+# Push
+docker push yourusername/flask-app:v1
+
+
+# =========================================================
+# PART 11: JENKINS SETUP (POWERSHELL)
+# =========================================================
+
+docker run -d `
+  --name jenkins-server `
+  -p 8080:8080 `
+  -p 50000:50000 `
+  -v jenkins_home:/var/jenkins_home `
+  -v /var/run/docker.sock:/var/run/docker.sock `
+  jenkins/jenkins:lts
+
+# Get Jenkins password
+docker exec jenkins-server cat /var/jenkins_home/secrets/initialAdminPassword
+
+
+# =========================================================
+# PART 12: EMERGENCY RESET
+# =========================================================
+
+# Stop all containers
+docker ps -q | ForEach-Object { docker stop $_ }
+
+# Remove all containers
+docker ps -aq | ForEach-Object { docker rm $_ }
+
+# Remove all images
+docker images -q | ForEach-Object { docker rmi -f $_ }
+
+# Full cleanup
+docker system prune -a --volumes -f
+
+
+# =========================================================
+# PART 13: CHECK PORT USAGE
+# =========================================================
+
+# Port 5000
+netstat -ano | findstr :5000
+
+# Port 8080
+netstat -ano | findstr :8080
+
+# Port 6000
+netstat -ano | findstr :6000
+
+
+# =========================================================
+# PART 14: QUICK EXAM WORKFLOW
+# =========================================================
+
+# Clean Docker
+docker system prune -a -f
+
+# Pull Python
+docker pull python:3.9
+
+# Build app
+docker build -t flask-app .
+
+# Run app
+docker run -d -p 8080:5000 --name flask-container flask-app
+
+# Verify
+docker ps
+
+# Open:
+# http://localhost:8080
+
+
+# =========================================================
+# PART 15: MOST IMPORTANT VIVA COMMANDS
+# =========================================================
+
+docker --version
+docker images
+docker ps
+docker build -t app .
+docker run -d -p 8080:5000 app
+docker logs <container-id>
+docker system prune -a -f
