@@ -31,3 +31,5 @@ git log
 git diff (try to run in conflict)  
 git revert HEAD
 git log --oneline
+git tag v1.1
+git push origin v1.1
